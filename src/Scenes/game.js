@@ -67,7 +67,6 @@ class GameScene extends Phaser.Scene {
         this.player.setScale(1);
 
         // Enemies
-        //this.spineShip = this.add.sprite(this.game.config.width / 3, 80, "enemyParts", "shipGreen_manned.png");
         this.spineShip = this.add.follower(this.curve, 10, 10, "enemyParts", "shipGreen_manned.png");
         this.upAndDownSideToSideShipSideToSideShip = this.add.sprite((this.game.config.width / 3) * 2, 80, "enemyParts", "shipGreen_manned.png");
 
@@ -84,7 +83,7 @@ class GameScene extends Phaser.Scene {
         this.spineShip.scorePoints = 25;
         this.upAndDownSideToSideShipSideToSideShip.scorePoints = 25;
 
-        //Extra lives
+        // Extra lives
         this.extraLives = this.add.sprite(this.game.config.width / 2, 80, "playerParts", "meteorBrown_med3.png");
 
         // Create white puff animation
@@ -140,8 +139,6 @@ class GameScene extends Phaser.Scene {
     }
 
     update() {
-        let my = this.my;
-
         // Moving player left
         if (this.left.isDown) {
             if (this.player.x > (this.player.displayWidth / 2)) {

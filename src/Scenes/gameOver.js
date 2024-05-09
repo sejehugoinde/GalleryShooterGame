@@ -6,7 +6,6 @@ class GameOverScene extends Phaser.Scene {
         super("gameOver");
         this.spaceKey = null;
         this.my = { sprite: {}, text: {} };
-
     }
 
     preload() {
