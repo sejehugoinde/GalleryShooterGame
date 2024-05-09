@@ -27,7 +27,7 @@ class StartScene extends Phaser.Scene {
             this.cameras.main.height / backgroundImage.height
         );
         // Add bitmap text
-        const text = this.add.bitmapText(0, 0, 'rocketSquare', 'Gallery shooter\nPress space bar to \nbegin the game\nPress h to see highscores');
+        const text = this.add.bitmapText(0, 0, 'rocketSquare', 'Gallery shooter\nPress space bar to \nbegin the game');
         // Set tint color
         text.setTint(0xff69b4);
 
@@ -61,9 +61,6 @@ class StartScene extends Phaser.Scene {
     update() {
         if (this.spaceKey.isDown) {
             this.scene.start("gameScene");
-        }
-        if (this.hKey.isDown) {
-            this.scene.start("highscoreScene");
         }
     }
 }
