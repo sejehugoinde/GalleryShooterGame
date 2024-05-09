@@ -5,9 +5,9 @@ class GameScene extends Phaser.Scene {
         super("gameScene");
 
         this.my = { sprite: {}, text: {} };
-        this.my.sprite.playerBullet = [];
-        this.my.sprite.spineShipBullet = [];
-        this.my.sprite.upAndDownSideToSideShipBullet = [];
+        this.playerBullet = [];
+        this.spineShipBullet = [];
+        this.upAndDownSideToSideShipBullet = [];
         this.maxPlayerBullets = 3;
         this.extraLivesSpeed = 2;
         this.enemyBulletCounter = 0;
@@ -63,15 +63,15 @@ class GameScene extends Phaser.Scene {
         );
 
         // Player
-        my.sprite.player = this.add.sprite(this.game.config.width / 2, this.game.config.height - 40, "playerParts", "playerShip1_blue.png");
-        my.sprite.player.setScale(1);
+        this.player = this.add.sprite(this.game.config.width / 2, this.game.config.height - 40, "playerParts", "playerShip1_blue.png");
+        this.player.setScale(1);
 
         // Enemies
-        //my.sprite.spineShip = this.add.sprite(this.game.config.width / 3, 80, "enemyParts", "shipGreen_manned.png");
-        my.sprite.spineShip = this.add.follower(this.curve, 10, 10, "enemyParts", "shipGreen_manned.png");
-        my.sprite.upAndDownSideToSideShipSideToSideShip = this.add.sprite((this.game.config.width / 3) * 2, 80, "enemyParts", "shipGreen_manned.png");
+        //this.spineShip = this.add.sprite(this.game.config.width / 3, 80, "enemyParts", "shipGreen_manned.png");
+        this.spineShip = this.add.follower(this.curve, 10, 10, "enemyParts", "shipGreen_manned.png");
+        this.upAndDownSideToSideShipSideToSideShip = this.add.sprite((this.game.config.width / 3) * 2, 80, "enemyParts", "shipGreen_manned.png");
 
-        my.sprite.spineShip.startFollow({
+        this.spineShip.startFollow({
             positionOnPath: true,
             duration: 8000,
             yoyo: true,
@@ -81,11 +81,11 @@ class GameScene extends Phaser.Scene {
         });
 
         // Set score points for both enemy ships
-        my.sprite.spineShip.scorePoints = 25;
-        my.sprite.upAndDownSideToSideShipSideToSideShip.scorePoints = 25;
+        this.spineShip.scorePoints = 25;
+        this.upAndDownSideToSideShipSideToSideShip.scorePoints = 25;
 
         //Extra lives
-        my.sprite.extraLives = this.add.sprite(this.game.config.width / 2, 80, "playerParts", "meteorBrown_med3.png");
+        this.extraLives = this.add.sprite(this.game.config.width / 2, 80, "playerParts", "meteorBrown_med3.png");
 
         // Create white puff animation
         this.anims.create({
@@ -144,23 +144,23 @@ class GameScene extends Phaser.Scene {
 
         // Moving player left
         if (this.left.isDown) {
-            if (my.sprite.player.x > (my.sprite.player.displayWidth / 2)) {
-                my.sprite.player.x -= this.playerSpeed;
+            if (this.player.x > (this.player.displayWidth / 2)) {
+                this.player.x -= this.playerSpeed;
             }
         }
 
         // Moving player right
         if (this.right.isDown) {
-            if (my.sprite.player.x < (this.game.config.width - (my.sprite.player.displayWidth / 2))) {
-                my.sprite.player.x += this.playerSpeed;
+            if (this.player.x < (this.game.config.width - (this.player.displayWidth / 2))) {
+                this.player.x += this.playerSpeed;
             }
         }
 
         // Check for player bullet being fired
         if (Phaser.Input.Keyboard.JustDown(this.space)) {
-            if (my.sprite.playerBullet.length < this.maxPlayerBullets) {
-                my.sprite.playerBullet.push(this.add.sprite(
-                    my.sprite.player.x, my.sprite.player.y - (my.sprite.player.displayHeight / 2), "playerParts", "laserBlue03.png")
+            if (this.playerBullet.length < this.maxPlayerBullets) {
+                this.playerBullet.push(this.add.sprite(
+                    this.player.x, this.player.y - (this.player.displayHeight / 2), "playerParts", "laserBlue03.png")
                 );
                 // Play sound
                 this.sound.play("laserSound", {
@@ -170,31 +170,31 @@ class GameScene extends Phaser.Scene {
         }
 
         // Update the position of the upAndDownSideToSideShipSideToSideShip
-        my.sprite.upAndDownSideToSideShipSideToSideShip.x += this.upAndDownSideToSideShipSideToSideShipSpeedX;
-        my.sprite.upAndDownSideToSideShipSideToSideShip.y += this.upAndDownSideToSideShipSideToSideShipSpeedY;
+        this.upAndDownSideToSideShipSideToSideShip.x += this.upAndDownSideToSideShipSideToSideShipSpeedX;
+        this.upAndDownSideToSideShipSideToSideShip.y += this.upAndDownSideToSideShipSideToSideShipSpeedY;
 
         // Reverse direction when reaching the edges of the screen
-        if (my.sprite.upAndDownSideToSideShipSideToSideShip.y <= 0 || my.sprite.upAndDownSideToSideShipSideToSideShip.y >= this.game.config.height) {
+        if (this.upAndDownSideToSideShipSideToSideShip.y <= 0 || this.upAndDownSideToSideShipSideToSideShip.y >= this.game.config.height) {
             this.upAndDownSideToSideShipSideToSideShipSpeedY *= -1;
         }
-        if (my.sprite.upAndDownSideToSideShipSideToSideShip.x <= 0 || my.sprite.upAndDownSideToSideShipSideToSideShip.x >= this.game.config.width) {
+        if (this.upAndDownSideToSideShipSideToSideShip.x <= 0 || this.upAndDownSideToSideShipSideToSideShip.x >= this.game.config.width) {
             this.upAndDownSideToSideShipSideToSideShipSpeedX *= -1;
         }
 
 
         // Make the extra life move smoothly down
-        my.sprite.extraLives.y += this.extraLivesSpeed;
+        this.extraLives.y += this.extraLivesSpeed;
 
-        if (this.collides(my.sprite.player, my.sprite.extraLives) && my.sprite.extraLives.frame.name === 'pill_blue.png') {
+        if (this.collides(this.player, this.extraLives) && this.extraLives.frame.name === 'pill_blue.png') {
             this.myLives += 1;
-            my.sprite.extraLives.y = -100;
-            my.sprite.extraLives.destroy();
+            this.extraLives.y = -100;
+            this.extraLives.destroy();
             this.updateLives();
         }
-        else if (this.collides(my.sprite.player, my.sprite.extraLives) && my.sprite.extraLives.frame.name !== 'pill_blue.png') {
+        else if (this.collides(this.player, this.extraLives) && this.extraLives.frame.name !== 'pill_blue.png') {
             this.myLives -= 0.5;
-            my.sprite.extraLives.y = -100;
-            my.sprite.extraLives.destroy();
+            this.extraLives.y = -100;
+            this.extraLives.destroy();
             this.updateLives();
         }
 
@@ -206,82 +206,82 @@ class GameScene extends Phaser.Scene {
         }
 
         // Filter out player bullets and enemy bullets that have moved off the top edge of the screen
-        my.sprite.playerBullet = my.sprite.playerBullet.filter((playerBullet) => playerBullet.y > -(playerBullet.displayHeight / 2));
-        my.sprite.spineShipBullet = my.sprite.spineShipBullet.filter((bullet) => bullet.y < this.game.config.height + (bullet.displayHeight / 2));
-        my.sprite.upAndDownSideToSideShipBullet = my.sprite.upAndDownSideToSideShipBullet.filter((bullet) => bullet.y < this.game.config.height + (bullet.displayHeight / 2));
+        this.playerBullet = this.playerBullet.filter((playerBullet) => playerBullet.y > -(playerBullet.displayHeight / 2));
+        this.spineShipBullet = this.spineShipBullet.filter((bullet) => bullet.y < this.game.config.height + (bullet.displayHeight / 2));
+        this.upAndDownSideToSideShipBullet = this.upAndDownSideToSideShipBullet.filter((bullet) => bullet.y < this.game.config.height + (bullet.displayHeight / 2));
 
         // Check for collision with the extra live
-        for (let bullet of my.sprite.playerBullet) {
-            if (this.collides(my.sprite.extraLives, bullet)) {
-                if (my.sprite.extraLives.texture.key === 'playerParts' && my.sprite.extraLives.frame.name === 'meteorBrown_med3.png') {
+        for (let bullet of this.playerBullet) {
+            if (this.collides(this.extraLives, bullet)) {
+                if (this.extraLives.texture.key === 'playerParts' && this.extraLives.frame.name === 'meteorBrown_med3.png') {
                     bullet.y = -100;
-                    my.sprite.extraLives.setTexture('playerParts', 'meteorBrown_small2.png');
+                    this.extraLives.setTexture('playerParts', 'meteorBrown_small2.png');
                 }
-                else if (my.sprite.extraLives.texture.key === 'playerParts' && my.sprite.extraLives.frame.name === 'meteorBrown_small2.png') {
+                else if (this.extraLives.texture.key === 'playerParts' && this.extraLives.frame.name === 'meteorBrown_small2.png') {
                     bullet.y = -100;
-                    my.sprite.extraLives.setTexture('playerParts', 'meteorBrown_tiny2.png');
+                    this.extraLives.setTexture('playerParts', 'meteorBrown_tiny2.png');
                 }
-                else if (my.sprite.extraLives.texture.key === 'playerParts' && my.sprite.extraLives.frame.name === 'meteorBrown_tiny2.png') {
+                else if (this.extraLives.texture.key === 'playerParts' && this.extraLives.frame.name === 'meteorBrown_tiny2.png') {
                     bullet.y = -100;
-                    my.sprite.extraLives.setTexture('playerParts', 'pill_blue.png');
+                    this.extraLives.setTexture('playerParts', 'pill_blue.png');
                 }
             }
         }
 
         // Check for collision with the enemy ships
-        for (let bullet of my.sprite.playerBullet) {
-            if (this.collides(my.sprite.upAndDownSideToSideShipSideToSideShip, bullet)) {
+        for (let bullet of this.playerBullet) {
+            if (this.collides(this.upAndDownSideToSideShipSideToSideShip, bullet)) {
 
                 // start animation
-                this.puff = this.add.sprite(my.sprite.upAndDownSideToSideShipSideToSideShip.x, my.sprite.upAndDownSideToSideShipSideToSideShip.y, "whitePuff03").setScale(0.25).play("puff");
+                this.puff = this.add.sprite(this.upAndDownSideToSideShipSideToSideShip.x, this.upAndDownSideToSideShipSideToSideShip.y, "whitePuff03").setScale(0.25).play("puff");
                 // clear out bullet
                 bullet.y = -100;
-                my.sprite.upAndDownSideToSideShipSideToSideShip.visible = false;
-                my.sprite.upAndDownSideToSideShipSideToSideShip.x = -100;
+                this.upAndDownSideToSideShipSideToSideShip.visible = false;
+                this.upAndDownSideToSideShipSideToSideShip.x = -100;
                 // Update score
-                this.myScore += my.sprite.upAndDownSideToSideShipSideToSideShip.scorePoints;
+                this.myScore += this.upAndDownSideToSideShipSideToSideShip.scorePoints;
                 this.updateScore();
                 // Have new enemy appear after end of animation
                 this.puff.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-                    my.sprite.upAndDownSideToSideShipSideToSideShip.visible = true;
-                    my.sprite.upAndDownSideToSideShipSideToSideShip.x = Math.random() * this.game.config.width;
+                    this.upAndDownSideToSideShipSideToSideShip.visible = true;
+                    this.upAndDownSideToSideShipSideToSideShip.x = Math.random() * this.game.config.width;
                 }, this);
             }
         }
 
         // Check for collision with the enemy ships
-        for (let bullet of my.sprite.playerBullet) {
-            if (my.sprite.spineShip.visible && this.collides(my.sprite.spineShip, bullet)) {
+        for (let bullet of this.playerBullet) {
+            if (this.spineShip.visible && this.collides(this.spineShip, bullet)) {
 
                 // start animation
-                this.puff = this.add.sprite(my.sprite.spineShip.x, my.sprite.spineShip.y, "whitePuff03").setScale(0.25).play("puff");
+                this.puff = this.add.sprite(this.spineShip.x, this.spineShip.y, "whitePuff03").setScale(0.25).play("puff");
                 // clear out bullet
                 bullet.y = -100;
-                my.sprite.spineShip.visible = false;
-                my.sprite.spineShip.x = -100;
+                this.spineShip.visible = false;
+                this.spineShip.x = -100;
                 // Update score
-                this.myScore += my.sprite.spineShip.scorePoints;
+                this.myScore += this.spineShip.scorePoints;
                 this.updateScore();
                 // Have new enemy appear after end of animation
                 this.puff.on(Phaser.Animations.Events.ANIMATION_START, () => {
                     // Choose a random point from the spline
                     const randomT = Math.random(); // Random parameter along the spline
                     const point = this.curve.getPoint(randomT); // Get the point on the spline at the random parameter
-                    my.sprite.spineShip.x = point.x;
-                    my.sprite.spineShip.y = point.y;
+                    this.spineShip.x = point.x;
+                    this.spineShip.y = point.y;
                 }, this);
 
                 this.puff.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
                     // Respawn the spineShip
-                    my.sprite.spineShip.visible = true;
+                    this.spineShip.visible = true;
                 }, this);
 
             }
         }
 
         // Check for collision with the player
-        for (let bullet of my.sprite.spineShipBullet) {
-            if (this.collides(my.sprite.player, bullet)) {
+        for (let bullet of this.spineShipBullet) {
+            if (this.collides(this.player, bullet)) {
                 bullet.y = -100;
                 this.myLives -= 1;
                 if (this.myLives == 0) {
@@ -293,8 +293,8 @@ class GameScene extends Phaser.Scene {
         }
 
         // Check for collision with the player
-        for (let bullet of my.sprite.upAndDownSideToSideShipBullet) {
-            if (this.collides(my.sprite.player, bullet)) {
+        for (let bullet of this.upAndDownSideToSideShipBullet) {
+            if (this.collides(this.player, bullet)) {
                 bullet.y = -100;
                 this.myLives -= 1;
                 if (this.myLives == 0) {
@@ -306,19 +306,19 @@ class GameScene extends Phaser.Scene {
         }
 
         // Check if the extra life is off the screen vertically (below the screen)
-        if (my.sprite.extraLives.y > this.game.config.height) {
+        if (this.extraLives.y > this.game.config.height) {
             // Destroy the extra life sprite
-            my.sprite.extraLives.destroy();
+            this.extraLives.destroy();
         }
 
         // Make all of the bullets move
-        for (let bullet of my.sprite.playerBullet) {
+        for (let bullet of this.playerBullet) {
             bullet.y -= this.playerBulletSpeed;
         }
-        for (let bullet of my.sprite.spineShipBullet) {
+        for (let bullet of this.spineShipBullet) {
             bullet.y += this.enemyBulletSpeed;
         }
-        for (let bullet of my.sprite.upAndDownSideToSideShipBullet) {
+        for (let bullet of this.upAndDownSideToSideShipBullet) {
             bullet.y += this.enemyBulletSpeed;
         }
     }
@@ -328,31 +328,31 @@ class GameScene extends Phaser.Scene {
         let my = this.my;
 
         // Check if low enemy ship exists and is visible
-        if (my.sprite.spineShip && my.sprite.spineShip.visible) {
+        if (this.spineShip && this.spineShip.visible) {
             // Create bullet sprite at the position of the low enemy ship
             let spineShipBullet = this.add.sprite(
-                my.sprite.spineShip.x,
-                my.sprite.spineShip.y + (my.sprite.spineShip.displayHeight / 2),
+                this.spineShip.x,
+                this.spineShip.y + (this.spineShip.displayHeight / 2),
                 "playerParts",
                 "laserGreen02.png"
             );
 
             // Add bullet to the array
-            my.sprite.spineShipBullet.push(spineShipBullet);
+            this.spineShipBullet.push(spineShipBullet);
         }
 
         // Check if high enemy ship exists and is visible
-        if (my.sprite.upAndDownSideToSideShipSideToSideShip && my.sprite.upAndDownSideToSideShipSideToSideShip.visible) {
+        if (this.upAndDownSideToSideShipSideToSideShip && this.upAndDownSideToSideShipSideToSideShip.visible) {
             // Create bullet sprite at the position of the high enemy ship
             let upAndDownSideToSideShipBullet = this.add.sprite(
-                my.sprite.upAndDownSideToSideShipSideToSideShip.x,
-                my.sprite.upAndDownSideToSideShipSideToSideShip.y + (my.sprite.upAndDownSideToSideShipSideToSideShip.displayHeight / 2),
+                this.upAndDownSideToSideShipSideToSideShip.x,
+                this.upAndDownSideToSideShipSideToSideShip.y + (this.upAndDownSideToSideShipSideToSideShip.displayHeight / 2),
                 "playerParts",
                 "laserGreen02.png"
             );
 
             // Add bullet to the array
-            my.sprite.upAndDownSideToSideShipBullet.push(upAndDownSideToSideShipBullet);
+            this.upAndDownSideToSideShipBullet.push(upAndDownSideToSideShipBullet);
         }
     }
 
