@@ -20,15 +20,14 @@ class GameScene extends Phaser.Scene {
         this.load.atlasXML("playerParts", "sheet.png", "sheet.xml");
         this.load.atlasXML("enemyParts", "spritesheet_spaceships.png", "sheet2.xml");
         this.load.atlasXML("enemyParts2", "spritesheet_lasers.png", "sheet3.xml");
-        this.load.image("./assets/meteorBrown_tiny2.png");
-        this.load.image("./assets/meteorBrown_small2.png");
-        this.load.image("./assets/meteorBrown_med3.png");
-        this.load.image("./assets/meteorBrown_big4.png");
+        this.load.image("meteorBrown_tiny2");
+        this.load.image("meteorBrown_small2");
+        this.load.image("meteorBrown_med3");
         this.load.image("whitePuff00", "whitePuff00.png");
         this.load.image("whitePuff01", "whitePuff01.png");
         this.load.image("whitePuff02", "whitePuff02.png");
         this.load.image("whitePuff03", "whitePuff03.png");
-        this.load.bitmapFont("rocketSquare", "./assets/KennyRocketSquare.png", "./assets/KennyRocketSquare.fnt");
+        this.load.bitmapFont("rocketSquare", "KennyRocketSquare.png", "KennyRocketSquare.fnt");
         this.load.image("black", "./assets/black.png");
         this.load.audio("laserSound", "sfx_laser1.ogg");
     }
