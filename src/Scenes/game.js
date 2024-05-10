@@ -86,6 +86,7 @@ class GameScene extends Phaser.Scene {
         // Extra lives
         this.extraLives = this.add.sprite(this.game.config.width / 2, 80, "playerParts", "meteorBrown_med3.png");
 
+        // Using code snippets from class
         // Create white puff animation
         this.anims.create({
             key: "puff",
@@ -100,6 +101,7 @@ class GameScene extends Phaser.Scene {
             hideOnComplete: true
         });
 
+        // Found inspiration for the timing events at https://labs.phaser.io/view.html?src=src/time%5Ctimer%20event.js
         this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.decrementTime, callbackScope: this, loop: true });
         this.extraLifeTimer = this.time.addEvent({ delay: 20000, callback: this.spawnExtraLife, callbackScope: this, loop: true });
 
@@ -207,6 +209,7 @@ class GameScene extends Phaser.Scene {
         this.spineShipBullet = this.spineShipBullet.filter((bullet) => bullet.y < this.game.config.height + (bullet.displayHeight / 2));
         this.upAndDownSideToSideShipBullet = this.upAndDownSideToSideShipBullet.filter((bullet) => bullet.y < this.game.config.height + (bullet.displayHeight / 2));
 
+        // Using code snippets from class
         // Check for collision with the extra live
         for (let bullet of this.playerBullet) {
             if (this.collides(this.extraLives, bullet)) {
@@ -225,6 +228,7 @@ class GameScene extends Phaser.Scene {
             }
         }
 
+        // Using code snippets from class
         // Check for collision with the enemy ships
         for (let bullet of this.playerBullet) {
             if (this.collides(this.upAndDownSideToSideShipSideToSideShip, bullet)) {
@@ -246,6 +250,7 @@ class GameScene extends Phaser.Scene {
             }
         }
 
+        // Using code snippets from class
         // Check for collision with the enemy ships
         for (let bullet of this.playerBullet) {
             if (this.spineShip.visible && this.collides(this.spineShip, bullet)) {
@@ -354,6 +359,7 @@ class GameScene extends Phaser.Scene {
     }
 
     // A center-radius AABB collision check
+    // Using code snippets from class
     collides(a, b) {
         if (Math.abs(a.x - b.x) > (a.displayWidth / 2 + b.displayWidth / 2)) return false;
         if (Math.abs(a.y - b.y) > (a.displayHeight / 2 + b.displayHeight / 2)) return false;

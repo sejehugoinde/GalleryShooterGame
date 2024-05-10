@@ -41,6 +41,8 @@ class StartScene extends Phaser.Scene {
         // Set initial position to the center of the screen
         text.setPosition(centerX, centerY);
 
+
+        // Found inspiration for the animations at https://labs.phaser.io/view.html?src=src/time%5Ctimer%20event.js
         // Create a tween animation to scale the text
         this.tweens.add({
             targets: text,
